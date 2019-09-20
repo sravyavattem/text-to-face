@@ -9,6 +9,8 @@ from keras import backend as K
 import numpy as np
 from PIL import Image
 import os
+import tensorflow as tf
+from keras.backend.tensorflow_backend import set_session
 
 from utility.glove_loader import GloveModel
 
@@ -147,6 +149,13 @@ class DCGanV3(object):
         text_batch = np.zeros((batch_size, self.text_input_dim))
 
         self.create_model()
+
+        config1 = tf.ConfigProto(allow_soft_placement=True)
+        config1.gpu_options.allow_growth = True
+        config1.gpu_options.allocator_type = 'BFC'
+        config1.gpu_options.per_process_gpu_memory_fraction = 0.4
+        config1.gpu_options.visible_device_list = "0"
+        set_session(tf.Session(config=config1))
 
         for epoch in range(epochs):
             print("Epoch is", epoch)

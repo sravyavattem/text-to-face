@@ -2,3 +2,7 @@ img_align_celeba/
 image_desc.csv
 .vscode
 __pycache__
+*.zip
+*.npy
+*.h5
+*.txt
